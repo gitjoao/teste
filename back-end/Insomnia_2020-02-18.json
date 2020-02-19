@@ -1,0 +1,172 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2020-02-19T02:55:51.060Z",
+    "__export_source": "insomnia.desktop.app:v7.0.6",
+    "resources": [
+        {
+            "_id": "req_11122c8da70f41458065e3d37668a0dd",
+            "authentication": {},
+            "body": {},
+            "created": 1582074325731,
+            "description": "",
+            "headers": [],
+            "isPrivate": false,
+            "metaSortKey": -1582074325731,
+            "method": "DELETE",
+            "modified": 1582074328769,
+            "name": "Delete Cliente",
+            "parameters": [],
+            "parentId": "wrk_d5cb33a3c8944008bf72e4173451f859",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingFollowRedirects": "global",
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "http://127.0.0.1:8000/api/cliente/1",
+            "_type": "request"
+        },
+        {
+            "_id": "wrk_d5cb33a3c8944008bf72e4173451f859",
+            "created": 1581029856212,
+            "description": "",
+            "modified": 1581029856212,
+            "name": "Insomnia",
+            "parentId": null,
+            "_type": "workspace"
+        },
+        {
+            "_id": "req_56ffb936e71f4028a972dc5175f0af03",
+            "authentication": {},
+            "body": {
+                "mimeType": "application/json",
+                "text": " {\n    \"nome\": \"Claudianus Boast\",\n    \"email\": \"cboast0@fastcompany.com\",\n    \"contato\": \"19957645371\",\n    \"estado\": \"São Paulo\",\n    \"cidade\": \"São João da Boa Vista\",\n    \"data-nascimento\": \"07061993\"\n  }"
+            },
+            "created": 1582073362453,
+            "description": "",
+            "headers": [
+                {
+                    "id": "pair_75fd80ea6f9f4b458454962c8d29aff3",
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "isPrivate": false,
+            "metaSortKey": -1582073362453,
+            "method": "POST",
+            "modified": 1582073439695,
+            "name": "Update Cliente",
+            "parameters": [],
+            "parentId": "wrk_d5cb33a3c8944008bf72e4173451f859",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingFollowRedirects": "global",
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "http://127.0.0.1:8000/api/cliente/1",
+            "_type": "request"
+        },
+        {
+            "_id": "req_2366c45d1b4642f7a61b9b3ce974976d",
+            "authentication": {},
+            "body": {},
+            "created": 1582073003732,
+            "description": "",
+            "headers": [],
+            "isPrivate": false,
+            "metaSortKey": -1582073003732,
+            "method": "GET",
+            "modified": 1582073174162,
+            "name": "Show Cliente",
+            "parameters": [],
+            "parentId": "wrk_d5cb33a3c8944008bf72e4173451f859",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingFollowRedirects": "global",
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "http://127.0.0.1:8000/api/cliente/1",
+            "_type": "request"
+        },
+        {
+            "_id": "req_a198c3cd82db464b81d12045dd15db1a",
+            "authentication": {},
+            "body": {
+                "mimeType": "application/json",
+                "text": "  {\n    \"nome\": \"Margi Gilhouley\",\n    \"email\": \"ljennions1@va.gov\",\n    \"contato\": \"19905613161\",\n    \"estado\": \"São Paulo\",\n    \"cidade\": \"Rio Claro\",\n\t\t\"data-nascimento\": \"09051985\",\n\t\t\"planos\": [\n    {\n\t\t\t\"id\": 1\n\t\t},\n\t\t{\n\t\t\t\"id\": 2\n\t\t}, \n\t\t{\n\t\t\t\"id\": 3\n\t\t}\n\t]\n }"
+            },
+            "created": 1582071893922,
+            "description": "",
+            "headers": [
+                {
+                    "id": "pair_ce8351dd60f6477294f4f5a101b3e1e2",
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "isPrivate": false,
+            "metaSortKey": -1582071893922,
+            "method": "POST",
+            "modified": 1582080141381,
+            "name": "Salva Clientes",
+            "parameters": [],
+            "parentId": "wrk_d5cb33a3c8944008bf72e4173451f859",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingFollowRedirects": "global",
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "http://127.0.0.1:8000/api/cliente",
+            "_type": "request"
+        },
+        {
+            "_id": "req_61606ec9dbd24de1a53deca714a6bfa2",
+            "authentication": {},
+            "body": {},
+            "created": 1582067860631,
+            "description": "",
+            "headers": [],
+            "isPrivate": false,
+            "metaSortKey": -1582067860631,
+            "method": "GET",
+            "modified": 1582071923200,
+            "name": "Lista Clientes",
+            "parameters": [],
+            "parentId": "wrk_d5cb33a3c8944008bf72e4173451f859",
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingFollowRedirects": "global",
+            "settingRebuildPath": true,
+            "settingSendCookies": true,
+            "settingStoreCookies": true,
+            "url": "http://127.0.0.1:8000/api/clientes",
+            "_type": "request"
+        },
+        {
+            "_id": "env_752670cdaa1863beb0f14bdb2852f21f06555199",
+            "color": null,
+            "created": 1581029856524,
+            "data": {},
+            "dataPropertyOrder": null,
+            "isPrivate": false,
+            "metaSortKey": 1581029856524,
+            "modified": 1581029856524,
+            "name": "Base Environment",
+            "parentId": "wrk_d5cb33a3c8944008bf72e4173451f859",
+            "_type": "environment"
+        },
+        {
+            "_id": "jar_752670cdaa1863beb0f14bdb2852f21f06555199",
+            "cookies": [],
+            "created": 1581029856558,
+            "modified": 1581029856558,
+            "name": "Default Jar",
+            "parentId": "wrk_d5cb33a3c8944008bf72e4173451f859",
+            "_type": "cookie_jar"
+        }
+    ]
+}
