@@ -1,0 +1,31 @@
+.container {
+    margin-top: 50px;
+}
+
+.espaco-button {
+    margin-right: 5px;
+}
+
+#conteudo-modal-visualizar .col-md-12 {
+    align-items: baseline;
+}
+
+#conteudo-modal-visualizar span {
+    margin-left: 5px;
+}
+
+.modal-header{
+ color: white; 
+ background: #0c515c;
+}
+
+.close {
+    color: white;
+}
+
+#plano span {
+    background: #0c515c57;
+    border-radius: 10%;
+    font-size: 20px;
+    font-weight: bold;
+}
