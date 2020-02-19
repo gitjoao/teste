@@ -17,6 +17,6 @@ class Plano extends Model
 
     public function clientes() 
     {
-        return $this->belongsToMany('App\Models\Cliente','clientes_planos','cliente_id', 'plano_id');
+        return $this->belongsToMany('App\Models\Cliente','clientes_planos','plano_id', 'cliente_id');
     }
 }

@@ -2,73 +2,102 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Cliente;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
-      
+
     private $cliente;
 
-    public function __construct(Cliente $cliente){
-        
+    public function __construct(Cliente $cliente)
+    {
+
         $this->Cliente = $cliente;
 
     }
-    
+
     public function index()
     {
         $clientes = $this->Cliente->with('planos')->get();
         return json_encode($clientes);
     }
 
-
     public function store(Request $request)
-    {   
+    {
         $data = $request->json()->all();
-        $insert = $this->Cliente->create($data);
 
-        if ($insert) {
-             return response('sucesso_salvar');
+        $email = $this->Cliente->where('email', $data['email'])->withTrashed()->count();
+
+        if($email == 0) {
+
+            $insert = $this->Cliente->create($data);
+    
+            $cliente = $this->Cliente->findOrFail($insert['id']);
+            $cliente->planos()->sync($data['planos']);
+    
+            if ($insert) {
+                return response('sucesso_salvar');
+            } else {
+                return response('erro_salvar');
+            }
         } else {
-             return response('erro_salvar');
+             return response('email_existente');
         }
-    }
 
+    }
 
     public function show($id)
     {
-        $cliente = $this->Cliente->with('planos')->find($id);
+        $cliente = $this->Cliente->with('planos')->findOrFail($id);
         return json_encode($cliente);
     }
 
-
     public function update(Request $request, $id)
     {
+        $cliente = $this->Cliente->findOrFail($id);
+        
         $newdata = $request->json()->all();
-
-        $cliente = $this->Cliente->find($id);
 
         $update = $cliente->update($newdata);
 
-        if($update){
-           return response('sucesso_update');
-        }else{
-           return response('erro_update');
+        if ($update) {
+            return response('sucesso_update');
+        } else {
+            return response('erro_update');
         }
     }
 
-
     public function destroy($id)
     {
-         $cliente = $this->Cliente->find($id);
-               
-         if($cliente->delete()) {
-            return response('sucesso_delete');  
-         } else {
-            return response('erro_delete');
-         }
+        $cliente = $this->Cliente->with('planos')->findOrFail($id);
+
+        if ($cliente->verfica_estado($cliente, 'São Paulo') &&
+            $cliente->verifica_plano($cliente['planos'], 'Free')) {
+            return "nao_pode_excluir";
+        } else {
+            $cliente->planos()->detach();
+            if ($cliente->delete()) {
+                return response('sucesso_delete');
+            } else {
+                return response('erro_delete');
+            }
+        }
+
     }
+
+    public function update_planos(Request $request, $id)
+    {
+        $cliente = $this->Cliente->findOrFail($id);
+
+        $data = $request->json()->all();
+        $cliente->planos()->detach();
+        if ($cliente->planos()->sync($data['planos'])) {
+            return response('sucesso_add');
+        } else {
+            return response('erro_add');
+
+        }
+    }
+
 }
