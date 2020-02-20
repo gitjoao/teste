@@ -62,9 +62,9 @@ class ClienteController extends Controller
         $update = $cliente->update($newdata);
 
         if ($update) {
-            return response('sucesso_update');
+            return response()->json(['status' => 'sucesso_update']);
         } else {
-            return response('erro_update');
+            return response()->json(['status' => 'erro_update']);
         }
     }
 

@@ -11,7 +11,7 @@ class Cliente extends Model
 
     protected $table = 'clientes';
     protected $primaryKey = 'id';
-    protected $fillable = ['nome', 'email', 'contato', 'estado', 'cidade', 'data-nascimento'];
+    protected $fillable = ['nome', 'email', 'contato', 'estado', 'cidade', 'data_nascimento'];
     protected $guarded = ['id', 'created_at', 'update_at'];
     protected $dates = ['deleted_at'];
 
@@ -44,10 +44,5 @@ class Cliente extends Model
         } else {
             return true;
         }
-    }
-
-    public function valida_email($email)
-    {
-        
     }
 }

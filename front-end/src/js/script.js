@@ -8,9 +8,9 @@ axios.get(base_url + '/clientes')
                 '<td>' + element.email + '</td>' +
                 '<td>' + element.contato + '</td>' +
                 '<td>' +
-                '<button onclick="visualizar_cliente(' + element.id + ')" data-toggle="modal" data-target="#modal-visualizar" type="button" class="btn btn-info espaco-button">Visualizar</button>' +
-                '<button type="button" class="btn btn-warning espaco-button">Editar</button>' +
-                '<button type="button" class="btn btn-danger espaco-button">Excluir</button>' +
+                '<button onclick="visualizar_cliente(' + element.id + ')" type="button" class="btn btn-info espaco-button">Visualizar</button>' +
+                '<button onclick="editar_cliente(' + element.id + ')" type="button" class="btn btn-warning espaco-button">Editar</button>' +
+                '<button  onclick="deletar_cliente(' + element.id + ')" type="button" class="btn btn-danger espaco-button">Excluir</button>' +
                 '</td></tr>'
             );
         });
@@ -74,9 +74,8 @@ function visualizar_cliente(id) {
                 $('#valor').append('<span>R$ ' + element.mensalidade+'</span>');
                 $('#valor').append('<br />');
 
-                // + element.nome +
-                //     element.mensalidade +
             });
+            $('#modal-visualizar').modal('show');
         })
         .catch(function (error) {
             // handle error
@@ -85,4 +84,80 @@ function visualizar_cliente(id) {
         .then(function () {
             // always executed
         });
+}
+
+function editar_cliente(id) {
+    axios.get(base_url + '/cliente/' + id)
+        .then(function (response) {
+            let dadosCliente = response.data;
+            $('#id').val(dadosCliente.id);
+            $('#nome').val(dadosCliente.nome);
+            $('#email').val(dadosCliente.email); 
+            $('#contato').val(dadosCliente.contato); 
+            $('#estado').val(dadosCliente.estado); 
+            $('#cidade').val(dadosCliente.cidade); 
+            $('#data_nascimento').val(dadosCliente.data_nascimento); 
+            $('#modal-edicao').modal('show');
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
+}
+
+function salvar_edicao() {
+    let cliente_id = $('#id').val();
+    let json_cliente = {
+        "nome": $('#nome').val(),
+        "email": $('#email').val(),
+        "contato": $('#contato').val(),
+        "estado": $('#estado').val(),
+        "data_nascimento": $('#data_nascimento').val()
+        }
+
+    axios({
+        method: 'post',
+        url: base_url + '/cliente/' + cliente_id,
+        responseType: 'json',
+        data: json_cliente,
+    })
+        .then(function (response) {
+            if (response.data.status == 'sucesso_update') {
+                Swal.fire({
+                    title: 'Editado!',
+                    text: "Seu cliente foi atualizado.",
+                    icon: 'success',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok!'
+                }).then((result) => {
+                    if (result.value) {
+                        location.reload();
+                    }
+                })
+            }
+        });
+}
+
+function deletar_cliente(id) {
+    Swal.fire({
+        title: 'Você tem certeza?',
+        text: "O cliente será deletado!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim!',
+        cancelButtonText: 'Não!'
+    }).then((result) => {
+        if (result.value) {
+            Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+            )
+        }
+    })
 }

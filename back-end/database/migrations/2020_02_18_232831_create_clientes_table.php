@@ -20,7 +20,7 @@ class CreateClientesTable extends Migration
             $table->char('contato', 11);
             $table->char('estado', 25);
             $table->char('cidade', 25);
-            $table->char('data-nascimento', 8);
+            $table->char('data_nascimento', 8);
             $table->timestamps();
             $table->softDeletes('deleted_at');
         });
