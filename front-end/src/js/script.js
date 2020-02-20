@@ -242,7 +242,7 @@ function salvar_novo() {
 }
 
 function deletar_cliente(id) {
-    $('#loading').css('display', 'block');
+    
     Swal.fire({
         title: 'Você tem certeza?',
         text: "O cliente será deletado!",
@@ -254,13 +254,13 @@ function deletar_cliente(id) {
         cancelButtonText: 'Não!'
     }).then((result) => {
         if (result.value) {
-            
+            $('#loading').css('display', 'block');
             axios({
                 method: 'delete',
                 url: base_url + '/cliente/' + id,
             })
                 .then(function (response) {
-                    
+                    $('#loading').css('display', 'none');
                     if (response.data.status == 'sucesso_delete') {
                         Swal.fire({
                             title: 'Excluido!',
