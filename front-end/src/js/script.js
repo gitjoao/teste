@@ -1,12 +1,14 @@
+$('#loading').css('display', 'block');
 axios.get(base_url + '/clientes')
     .then(function (response) {
+        $('#loading').css('display', 'none');
         let listaCliente = response.data;
         listaCliente.forEach(element => {
             $('#conteudo-tabela').append(
                 '<tr><th scope="row">' + element.id + '</th>' +
                 '<td>' + element.nome + '</td>' +
                 '<td>' + element.email + '</td>' +
-                '<td>' + element.contato + '</td>' +
+                '<td>' + ajustaNumero(element.contato) + '</td>' +
                 '<td>' +
                 '<button onclick="visualizar_cliente(' + element.id + ')" type="button" class="btn btn-info espaco-button">Visualizar</button>' +
                 '<button onclick="editar_cliente(' + element.id + ')" type="button" class="btn btn-warning espaco-button">Editar</button>' +
@@ -24,9 +26,11 @@ axios.get(base_url + '/clientes')
     });
 
 function visualizar_cliente(id) {
+    $('#loading').css('display', 'block');
     $('#conteudo-modal-visualizar').html('');
     axios.get(base_url + '/cliente/' + id)
         .then(function (response) {
+            $('#loading').css('display', 'none');
             let dadosCliente = response.data;
             $('#conteudo-modal-visualizar').append(
                 '<div class="col-md-6">'+
@@ -38,7 +42,7 @@ function visualizar_cliente(id) {
                 '<h5>E-mail: </h5><span>' + dadosCliente.email+ '</span>' +
                 '</div>' +
                 '<div class="col-md-12 d-flex">' +
-                '<h5>Contato: </h5><span>' + dadosCliente.contato+ '</span>' +
+                '<h5>Contato: </h5><span>' + ajustaNumero(dadosCliente.contato)+ '</span>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -52,7 +56,7 @@ function visualizar_cliente(id) {
                 '<h5>Cidade: </h5><span>' + dadosCliente.cidade+ '</span>' +
                 '</div>' +
                 '<div class="col-md-12 d-flex">' +
-                '<h5>Data Nascimento: </h5><span>' + dadosCliente.data_nascimento+ '</span>' +
+                '<h5>Data Nascimento: </h5><span>' + ajustaData(dadosCliente.data_nascimento)+ '</span>' +
                 '</div>' +
                 '</div>' +
                 '</div>'+ 
@@ -72,7 +76,7 @@ function visualizar_cliente(id) {
                 
                 $('#plano').append('<span>' + element.nome+'</span>');
                 $('#plano').append('<br />');
-                $('#valor').append('<span>R$ ' + element.mensalidade+'</span>');
+                $('#valor').append('<span>' + numberToReal(element.mensalidade)+'</span>');
                 $('#valor').append('<br />');
 
             });
@@ -88,12 +92,14 @@ function visualizar_cliente(id) {
 }
 
 function editar_cliente(id) {
+    $('#loading').css('display', 'block');
     $("#edicao_cliente input[type=checkbox]").each(function () { 
         $(this).prop("checked", false);
     })
 
     axios.get(base_url + '/cliente/' + id)
         .then(function (response) {
+            $('#loading').css('display', 'none');
             let dadosCliente = response.data;
             
             dadosCliente.planos.forEach(element => {
@@ -103,10 +109,10 @@ function editar_cliente(id) {
             $('#id').val(dadosCliente.id);
             $('#nome').val(dadosCliente.nome);
             $('#email').val(dadosCliente.email); 
-            $('#contato').val(dadosCliente.contato); 
+            $('#contato').val(ajustaNumero(dadosCliente.contato)); 
             $('#estado').val(dadosCliente.estado); 
             $('#cidade').val(dadosCliente.cidade); 
-            $('#data_nascimento').val(dadosCliente.data_nascimento); 
+            $('#data_nascimento').val(ajustaData(dadosCliente.data_nascimento)); 
             $('#modal-edicao').modal('show');
         })
         .catch(function (error) {
@@ -119,6 +125,7 @@ function editar_cliente(id) {
 }
 
 function salvar_edicao() {
+    $('#loading').css('display', 'block');
     let cliente_id = $('#edicao_cliente #id').val();
     let arrayPlanos = [];
     $("#edicao_cliente input[type=checkbox]:checked").each(function () {
@@ -142,6 +149,7 @@ function salvar_edicao() {
         data: json_cliente,
     })
         .then(function (response) {
+            $('#loading').css('display', 'none');
             if (response.data.status == 'sucesso_update') {
                 Swal.fire({
                     title: 'Editado!',
@@ -162,7 +170,7 @@ function salvar_edicao() {
 }
 
 function salvar_novo() {
-
+    $('#loading').css('display', 'block');
     var arrayPlanos = [];
     $("#criacao_cliente input[type=checkbox]:checked").each(function () {
         arrayPlanos.push(($(this).val()));
@@ -185,6 +193,7 @@ function salvar_novo() {
         data: json_cliente,
     })
         .then(function (response) {
+            $('#loading').css('display', 'none');
             if (response.data.status == 'sucesso_salvar') {
                 Swal.fire({
                     title: 'Salvo!',
@@ -225,11 +234,13 @@ function deletar_cliente(id) {
         cancelButtonText: 'Não!'
     }).then((result) => {
         if (result.value) {
+            $('#loading').css('display', 'block');
             axios({
                 method: 'delete',
                 url: base_url + '/cliente/' + id,
             })
                 .then(function (response) {
+                    $('#loading').css('display', 'none');
                     if (response.data.status == 'sucesso_delete') {
                         Swal.fire({
                             title: 'Excluido!',

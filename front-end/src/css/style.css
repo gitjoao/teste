@@ -42,3 +42,29 @@
 .form-check-input{
     position: initial!important;
 }
+
+.loading-overlay { 
+	position:fixed;
+	top:0;
+	left:0;
+	width:100vw;
+	height:100vh;
+    background:rgba(255,255,255,0.8);
+    z-index: 1;
+}
+
+.loading-container {
+	background:#fff;
+	text-align:center;
+	border:1px solid #ccc;
+	padding:30px;
+	width:300px;
+	font-family:arial;
+	font-weight:bold;
+	border-radius:3px;
+	position:absolute;
+	left:50%;
+	top:50%;
+	margin-left:-150px;
+	margin-top:-150px;
+}

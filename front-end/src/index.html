@@ -24,8 +24,15 @@
     <link rel="stylesheet" href="./css/style.css">
     </head>
 <body>
+    <div id="loading" class="loading-overlay">
+        <div class="loading-container">
+            <p>Carregando...</p>
+            <div class="loading"></div>
+        </div>
+    </div>
     <div class="container">
-        <div class="row">
+        <div class="row" style="justify-content: center;">
+            <h4>Lista de Clientes</h4>
             <div class="col-md-12">
                 <div class="table-responsive">
                     <button data-toggle="modal" data-target="#modal-criar" type="button"
