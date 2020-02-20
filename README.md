@@ -29,6 +29,7 @@ DB_DATABASE= your_data_base
 DB_USERNAME= your_user
 DB_PASSWORD= your_pass
 ```
+Criar uma Base de Dados com o mesmo nome que esta na DB_DATABASE no arquivo **.env**
 
 Abri o **bash** dentro do diretório **./back-end** e rodar o comando 
 ```bash
