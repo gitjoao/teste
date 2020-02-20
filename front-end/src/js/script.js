@@ -88,9 +88,18 @@ function visualizar_cliente(id) {
 }
 
 function editar_cliente(id) {
+    $("#edicao_cliente input[type=checkbox]").each(function () { 
+        $(this).prop("checked", false);
+    })
+
     axios.get(base_url + '/cliente/' + id)
         .then(function (response) {
             let dadosCliente = response.data;
+            
+            dadosCliente.planos.forEach(element => {
+                $("#" + element.nome).prop("checked", true);
+            });
+
             $('#id').val(dadosCliente.id);
             $('#nome').val(dadosCliente.nome);
             $('#email').val(dadosCliente.email); 
@@ -111,13 +120,19 @@ function editar_cliente(id) {
 
 function salvar_edicao() {
     let cliente_id = $('#edicao_cliente #id').val();
+    let arrayPlanos = [];
+    $("#edicao_cliente input[type=checkbox]:checked").each(function () {
+        arrayPlanos.push(($(this).val()));
+    })
+
     let json_cliente = {
         "nome": $('#edicao_cliente #nome').val(),
         "email": $('#edicao_cliente #email').val(),
         "contato": $('#edicao_cliente #contato').val().replace(/\D/gim, ''),
         "estado": $('#edicao_cliente #estado').val(),
         "cidade": $('#edicao_cliente #cidade').val(),
-        "data_nascimento": $('#edicao_cliente #data_nascimento').val().replace(/\D/gim, '')
+        "data_nascimento": $('#edicao_cliente #data_nascimento').val().replace(/\D/gim, ''),
+        "planos": arrayPlanos
         }
 
     axios({
@@ -147,13 +162,20 @@ function salvar_edicao() {
 }
 
 function salvar_novo() {
+
+    var arrayPlanos = [];
+    $("#criacao_cliente input[type=checkbox]:checked").each(function () {
+        arrayPlanos.push(($(this).val()));
+    })
+
     let json_cliente = {
         "nome": $('#criacao_cliente #nome').val(),
         "email": $('#criacao_cliente #email').val(),
         "contato": $('#criacao_cliente #contato').val().replace(/\D/gim, ''),
         "estado": $('#criacao_cliente #estado').val(),
         "cidade": $('#criacao_cliente #cidade').val(),
-        "data_nascimento": $('#criacao_cliente #data_nascimento').val().replace(/\D/gim, '')
+        "data_nascimento": $('#criacao_cliente #data_nascimento').val().replace(/\D/gim, ''),
+        "planos" : arrayPlanos
     }
 
     axios({

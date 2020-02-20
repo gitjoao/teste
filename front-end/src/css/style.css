@@ -33,3 +33,12 @@
 .modal-footer {
     border-top: none!important;
 }
+
+.form-check {
+    margin-right: 20px;
+    font-size: 20px;
+}
+
+.form-check-input{
+    position: initial!important;
+}

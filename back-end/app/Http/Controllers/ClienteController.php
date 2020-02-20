@@ -41,7 +41,8 @@ class ClienteController extends Controller
             return response()->json($validator->errors(), 422);
         } else {
             $insert = $this->Cliente->create($data);
-
+            $cliente = $this->Cliente->find($insert['id']);
+            $cliente->planos()->sync($data['planos']);
             if ($insert) {
                 return response()->json(['status' => 'sucesso_salvar'], 200);
             } else {
@@ -75,6 +76,8 @@ class ClienteController extends Controller
             return response()->json($validator->errors(), 422);
         } else {
             $update = $cliente->update($newdata);
+            $cliente->planos()->detach();
+            $cliente->planos()->sync($newdata['planos']);
 
             if ($update) {
                 return response()->json(['status' => 'sucesso_update'], 200);
@@ -102,20 +105,6 @@ class ClienteController extends Controller
             }
         }
 
-    }
-
-    public function update_planos(Request $request, $id)
-    {
-        $cliente = $this->Cliente->findOrFail($id);
-
-        $data = $request->json()->all();
-        $cliente->planos()->detach();
-        if ($cliente->planos()->sync($data['planos'])) {
-            return response('sucesso_add');
-        } else {
-            return response('erro_add');
-
-        }
     }
 
 }
