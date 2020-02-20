@@ -56,11 +56,12 @@ function visualizar_cliente(id) {
                 '</div>' +
                 '</div>' +
                 '</div>'+ 
+                '<hr style="width: 100%;">'+
                 '<div class="col-md-6 d-flex flex-column align-items-start">' +
-                '<h5>Plano: </h5><div id="plano"> Não tem</div>'+
+                '<h5>Planos </h5><div id="plano"> Não tem</div>'+
                 '</div>' +
                 '<div class="col-md-6 d-flex flex-column align-items-start">' +
-                '<h5>Mensalidade: </h5><div id="valor"> Não tem </div>' +
+                '<h5>Mensalidade </h5><div id="valor"> Não tem </div>' +
                 '</div>'
             );
             if (dadosCliente.planos != '') {
@@ -109,13 +110,14 @@ function editar_cliente(id) {
 }
 
 function salvar_edicao() {
-    let cliente_id = $('#id').val();
+    let cliente_id = $('#edicao_cliente #id').val();
     let json_cliente = {
-        "nome": $('#nome').val(),
-        "email": $('#email').val(),
-        "contato": $('#contato').val(),
-        "estado": $('#estado').val(),
-        "data_nascimento": $('#data_nascimento').val()
+        "nome": $('#edicao_cliente #nome').val(),
+        "email": $('#edicao_cliente #email').val(),
+        "contato": $('#edicao_cliente #contato').val().replace(/\D/gim, ''),
+        "estado": $('#edicao_cliente #estado').val(),
+        "cidade": $('#edicao_cliente #cidade').val(),
+        "data_nascimento": $('#edicao_cliente #data_nascimento').val().replace(/\D/gim, '')
         }
 
     axios({
@@ -138,6 +140,54 @@ function salvar_edicao() {
                     }
                 })
             }
+        }).catch(function (error) {
+            // handle error
+            console.log(error.response);
+        });
+}
+
+function salvar_novo() {
+    let json_cliente = {
+        "nome": $('#criacao_cliente #nome').val(),
+        "email": $('#criacao_cliente #email').val(),
+        "contato": $('#criacao_cliente #contato').val().replace(/\D/gim, ''),
+        "estado": $('#criacao_cliente #estado').val(),
+        "cidade": $('#criacao_cliente #cidade').val(),
+        "data_nascimento": $('#criacao_cliente #data_nascimento').val().replace(/\D/gim, '')
+    }
+
+    axios({
+        method: 'post',
+        url: base_url + '/cliente/',
+        responseType: 'json',
+        data: json_cliente,
+    })
+        .then(function (response) {
+            if (response.data.status == 'sucesso_salvar') {
+                Swal.fire({
+                    title: 'Salvo!',
+                    text: "Seu cliente foi criado.",
+                    icon: 'success',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok!'
+                }).then((result) => {
+                    if (result.value) {
+                        location.reload();
+                    }
+                })
+            } 
+            if (response.data.status == 'erro_salvar') {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: "Ocorreu um erro ao salvar seu cliente.",
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok!'
+                })
+            }
+        }).catch(function (error) {
+            // handle error
+            console.log(error.response);
         });
 }
 
@@ -153,11 +203,34 @@ function deletar_cliente(id) {
         cancelButtonText: 'Não!'
     }).then((result) => {
         if (result.value) {
-            Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-            )
+            axios({
+                method: 'delete',
+                url: base_url + '/cliente/' + id,
+            })
+                .then(function (response) {
+                    if (response.data.status == 'sucesso_delete') {
+                        Swal.fire({
+                            title: 'Excluido!',
+                            text: "Seu cliente foi excluido.",
+                            icon: 'success',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Ok!'
+                        }).then((result) => {
+                            if (result.value) {
+                                location.reload();
+                            }
+                        })
+                    }
+                    if (response.data.status == 'nao_pode_excluir') {
+                        Swal.fire({
+                            title: 'Ops!',
+                            text: "Este cliente não pode ser excluido.",
+                            icon: 'error',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Ok!'
+                        })
+                    }
+                });
         }
     })
 }

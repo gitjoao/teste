@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <button onclick="novo_cliente()" type="button"
+                    <button data-toggle="modal" data-target="#modal-criar" type="button"
                         class="btn btn-success espaco-button" style="margin: 10px;">Novo Cliente</button>
                 <table class="table">
                     <thead>
@@ -67,12 +67,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Sair</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Voltar</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Modal Editar -->
 <div class="modal fade bd-example-modal-lg" id="modal-edicao" tabindex="-1" role="dialog"
     aria-labelledby="modal-edicaoLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -118,8 +119,66 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Sair</button>
-                <button onclick="salvar_edicao()" type="button" class="btn btn-success" data-dismiss="modal">Salvar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Voltar</button>
+                <button onclick="salvar_edicao()" type="button" class="btn btn-success">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal criar -->
+<div class="modal fade bd-example-modal-lg" id="modal-criar" tabindex="-1" role="dialog"
+    aria-labelledby="modal-criarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-criarLabel">Criação de Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container mt-0">
+                    <div class="row d-flex" id="conteudo-modal-criar">
+                        <form style="width: 100%;" id="criacao_cliente" action="">
+                            <div class="form-group">
+                                <label for="nome">Nome</label>
+                                <input type="text" class="form-control" name="nome" id="nome"
+                                    placeholder="Informe o Nome">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+                                <input type="email" class="form-control" name="email" id="email"
+                                    placeholder="Informe o E-mail">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contato">Telefone</label>
+                                <input type="text" class="form-control contato" name="contato" id="contato"
+                                    placeholder="Informe o Numero">
+                            </div>
+                            <div class="form-group">
+                                <label for="estado">Estado</label>
+                                <input type="text" class="form-control" name="estado" id="estado"
+                                    placeholder="Informe o Estado">
+                            </div>
+                            <div class="form-group">
+                                <label for="cidade">Cidade</label>
+                                <input type="text" class="form-control" name="cidade" id="cidade"
+                                    placeholder="Informe a Cidade">
+                            </div>
+                            <div class="form-group">
+                                <label for="data_nascimento">Data Nascimento</label>
+                                <input type="text" class="form-control data_nascimento" name="data_nascimento"
+                                    id="data_nascimento" placeholder="Informe a Data de Nascimento">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Voltar</button>
+                <button onclick="salvar_novo()" type="button" class="btn btn-success">Salvar</button>
             </div>
         </div>
     </div>
