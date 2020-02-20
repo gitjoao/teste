@@ -1,4 +1,4 @@
-$('#loading').css('display', 'block');
+
 axios.get(base_url + '/clientes')
     .then(function (response) {
         $('#loading').css('display', 'none');
@@ -18,8 +18,7 @@ axios.get(base_url + '/clientes')
         });
     })
     .catch(function (error) {
-        // handle error
-        console.log(error);
+        
     })
     .then(function () {
         // always executed
@@ -30,7 +29,7 @@ function visualizar_cliente(id) {
     $('#conteudo-modal-visualizar').html('');
     axios.get(base_url + '/cliente/' + id)
         .then(function (response) {
-            $('#loading').css('display', 'none');
+            
             let dadosCliente = response.data;
             $('#conteudo-modal-visualizar').append(
                 '<div class="col-md-6">'+
@@ -60,12 +59,18 @@ function visualizar_cliente(id) {
                 '</div>' +
                 '</div>' +
                 '</div>'+ 
+
                 '<hr style="width: 100%;">'+
-                '<div class="col-md-6 d-flex flex-column align-items-start">' +
+
+                '<div class="col-md-12">' +
+                '<div class="row" style="flex-wrap: nowrap;">' +
+                '<div class="col-md-6 flex-column align-items-start">' +
                 '<h5>Planos </h5><div id="plano"> Não tem</div>'+
                 '</div>' +
-                '<div class="col-md-6 d-flex flex-column align-items-start">' +
+                '<div class="col-md-6 flex-column align-items-start">' +
                 '<h5>Mensalidade </h5><div id="valor"> Não tem </div>' +
+                '</div>' +
+                '</div>' +
                 '</div>'
             );
             if (dadosCliente.planos != '') {
@@ -84,22 +89,24 @@ function visualizar_cliente(id) {
         })
         .catch(function (error) {
             // handle error
-            console.log(error);
         })
-        .then(function () {
-            // always executed
+        .finally(function (){
+            $('#loading').css('display', 'none');
         });
 }
 
 function editar_cliente(id) {
     $('#loading').css('display', 'block');
+    let listaErros = $('.alert_error');
+    listaErros.html('');
+    listaErros.css('display', 'none');
     $("#edicao_cliente input[type=checkbox]").each(function () { 
         $(this).prop("checked", false);
     })
 
     axios.get(base_url + '/cliente/' + id)
         .then(function (response) {
-            $('#loading').css('display', 'none');
+            
             let dadosCliente = response.data;
             
             dadosCliente.planos.forEach(element => {
@@ -115,12 +122,10 @@ function editar_cliente(id) {
             $('#data_nascimento').val(ajustaData(dadosCliente.data_nascimento)); 
             $('#modal-edicao').modal('show');
         })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
+        .catch(function (error) {     
         })
-        .then(function () {
-            // always executed
+        .finally(function () {
+            $('#loading').css('display', 'none');
         });
 }
 
@@ -149,7 +154,7 @@ function salvar_edicao() {
         data: json_cliente,
     })
         .then(function (response) {
-            $('#loading').css('display', 'none');
+            
             if (response.data.status == 'sucesso_update') {
                 Swal.fire({
                     title: 'Editado!',
@@ -164,8 +169,15 @@ function salvar_edicao() {
                 })
             }
         }).catch(function (error) {
-            // handle error
-            console.log(error.response);
+            let listaErros = $('.alert_error');
+            listaErros.html('');
+            listaErros.css('display', 'block');
+            $.each(error.response['data'], function (index, value) {
+                listaErros.append(value + '<br/>');
+            });
+        })
+        .finally(function () {
+            $('#loading').css('display', 'none');
         });
 }
 
@@ -193,7 +205,7 @@ function salvar_novo() {
         data: json_cliente,
     })
         .then(function (response) {
-            $('#loading').css('display', 'none');
+            
             if (response.data.status == 'sucesso_salvar') {
                 Swal.fire({
                     title: 'Salvo!',
@@ -217,12 +229,20 @@ function salvar_novo() {
                 })
             }
         }).catch(function (error) {
-            // handle error
-            console.log(error.response);
+            let listaErros = $('.alert_error');
+            listaErros.html('');
+            listaErros.css('display','block');
+            $.each(error.response['data'], function (index, value) {
+                listaErros.append(value + '<br/>');
+            });
+        })
+        .finally(function () {
+            $('#loading').css('display', 'none');
         });
 }
 
 function deletar_cliente(id) {
+    $('#loading').css('display', 'block');
     Swal.fire({
         title: 'Você tem certeza?',
         text: "O cliente será deletado!",
@@ -234,13 +254,13 @@ function deletar_cliente(id) {
         cancelButtonText: 'Não!'
     }).then((result) => {
         if (result.value) {
-            $('#loading').css('display', 'block');
+            
             axios({
                 method: 'delete',
                 url: base_url + '/cliente/' + id,
             })
                 .then(function (response) {
-                    $('#loading').css('display', 'none');
+                    
                     if (response.data.status == 'sucesso_delete') {
                         Swal.fire({
                             title: 'Excluido!',
@@ -263,7 +283,18 @@ function deletar_cliente(id) {
                             confirmButtonText: 'Ok!'
                         })
                     }
+                })
+                .finally(function () {
+                    $('#loading').css('display', 'none');
                 });
         }
     })
+}
+
+function openModalCriar() {
+    let listaErros = $('.alert_error');
+    listaErros.html('');
+    listaErros.css('display', 'none');
+    $('#modal-criar').modal('show');
+    
 }
