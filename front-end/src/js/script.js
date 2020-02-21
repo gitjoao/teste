@@ -1,4 +1,3 @@
-
 axios.get(base_url + '/clientes')
     .then(function (response) {
         $('#loading').css('display', 'none');

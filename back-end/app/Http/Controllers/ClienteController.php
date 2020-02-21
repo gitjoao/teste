@@ -19,7 +19,7 @@ class ClienteController extends Controller
 
     public function index()
     {
-        $clientes = $this->Cliente->with('planos')->get();
+        $clientes = $this->Cliente->with('planos')->orderby('nome', 'asc')->get();
         return response()->json($clientes, 200);
 
     }
@@ -30,7 +30,7 @@ class ClienteController extends Controller
 
         $validator = \Validator::make($data, [
             'nome' => 'required',
-            'email' => 'required|unique:clientes',
+            'email' => 'required|email|unique:clientes',
             'contato' => 'required|max:11',
             'estado' => 'required|max:25',
             'cidade' => 'required|max:25',
