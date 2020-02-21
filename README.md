@@ -1,12 +1,12 @@
-## Back-end e Front-end
+## Aplicação desenvolvida para teste. 
 
-back-end é uma api REST feita em PHP(Framework Laravel);
+Back-end é uma api REST feita em PHP(Framework Laravel);
 
-front-end foi utilizado Bootstrap, HTML, CSS e Javascript que consome a api.
+Front-end foi utilizado Bootstrap, HTML, CSS e Javascript que consome a api.
 
 ## Instalação
 
-clonar este repositório 
+Clonar este repositório 
 
 ```bash
 cd teste 
