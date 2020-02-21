@@ -41,7 +41,7 @@ Start o servidor
 ```bash
 php artisan serve
 ```
-Entrar no diretório **./front-end/src** e abri no navegador o arquivo **index.html**
+Entrar no diretório **./front-end** e abri no navegador o arquivo **index.html**
 
-Para contornar o erro de Cors instalei uma [extensão](https://chrome.google.com/webstore/detail/moesif-orign-cors-changer/digfbfaphojjndkpccljibejjbppifbc) do chrome
+Caso tiver algum erro por conta do CORS adicionar essa [extensão](https://chrome.google.com/webstore/detail/moesif-orign-cors-changer/digfbfaphojjndkpccljibejjbppifbc) do chrome
 
